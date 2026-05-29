@@ -101,14 +101,17 @@ export async function signPdfDocument(fileOrBytes, options) {
 
   const preparedBytes = await pdfDoc.save({ useObjectStreams: false })
 
-  const pdfWithPlaceholder = await pdflibAddPlaceholder({
-    pdfDoc: await PDFDocument.load(preparedBytes),
+  // pdflibAddPlaceholder mutates the doc in place and returns void — save it ourselves
+  const signingDoc = await PDFDocument.load(preparedBytes)
+  await pdflibAddPlaceholder({
+    pdfDoc: signingDoc,
     reason: `Signed by ${signerName}`,
     contactInfo: signerEmail,
     name: signerName,
     location: 'BitzerPDF',
     signatureLength: 8192,
   })
+  const pdfWithPlaceholder = Buffer.from(await signingDoc.save({ useObjectStreams: false }))
 
   const p12 = await buildP12(signerName, signerEmail)
   const signer = new P12Signer(p12, { passphrase: '__bitzerpdf__' })

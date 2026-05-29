@@ -5,14 +5,15 @@
 }
 
 :root {
-  --bg: #1a1a2e;
-  --surface: #16213e;
-  --surface2: #0f3460;
-  --accent: #e94560;
-  --accent-hover: #c73652;
-  --text: #e0e0e0;
+  --bg: #1c1c1c;
+  --surface: #252525;
+  --surface2: #2e2e2e;
+  --accent: #5cb85c;
+  --accent-hover: #4a9e42;
+  --accent-active-bg: #1e3a1a;
+  --text: #e8e8e8;
   --text-muted: #888;
-  --border: #2a2a4a;
+  --border: #383838;
   --radius: 8px;
 }
 
@@ -43,8 +44,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 16px;
-  height: 52px;
+  padding: 0 28px;
+  height: 120px;
   background: var(--surface);
   border-bottom: 1px solid var(--border);
   flex-shrink: 0;
@@ -53,29 +54,54 @@ body {
 .header-left {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 20px;
 }
 
 .logo {
-  font-size: 18px;
+  font-size: 36px;
   font-weight: 700;
   color: var(--accent);
   letter-spacing: -0.5px;
 }
 
+.logo-img {
+  height: 88px;
+  width: auto;
+  display: block;
+  mix-blend-mode: screen;
+}
+
+.logo-btn {
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.logo-btn:hover {
+  opacity: 0.85;
+}
+
+.mascot-img {
+  width: min(76vw, 920px);
+  max-height: min(62vh, 720px);
+  height: auto;
+  display: block;
+  object-fit: contain;
+  filter: drop-shadow(0 12px 32px rgba(0,0,0,0.6));
+}
+
 .tabs {
   display: flex;
-  gap: 4px;
+  gap: 6px;
 }
 
 .tab-btn {
   background: none;
   border: none;
   color: var(--text-muted);
-  padding: 6px 14px;
+  padding: 12px 24px;
   border-radius: var(--radius);
   cursor: pointer;
-  font-size: 14px;
+  font-size: 18px;
   transition: background 0.15s, color 0.15s;
 }
 
@@ -94,10 +120,10 @@ body {
   background: var(--accent);
   color: #fff;
   border: none;
-  padding: 6px 14px;
+  padding: 12px 24px;
   border-radius: var(--radius);
   cursor: pointer;
-  font-size: 13px;
+  font-size: 16px;
   font-weight: 500;
   transition: background 0.15s;
 }
@@ -114,14 +140,59 @@ body {
   display: flex;
 }
 
+.dev-banner {
+  position: fixed;
+  bottom: 30px;
+  right: 14px;
+  max-width: 220px;
+  background: rgba(232, 131, 42, 0.1);
+  border: 1px solid rgba(245, 166, 35, 0.45);
+  border-radius: 6px;
+  padding: 7px 10px;
+  pointer-events: none;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  text-align: right;
+}
+
+.dev-banner-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: #f5a623;
+}
+
+.dev-banner-sub {
+  font-size: 10px;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+.version-badge {
+  position: fixed;
+  bottom: 10px;
+  right: 14px;
+  font-size: 11px;
+  color: var(--text-muted);
+  opacity: 0.45;
+  pointer-events: none;
+  z-index: 999;
+  letter-spacing: 0.3px;
+}
+
 .empty-state {
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 16px;
+  gap: 18px;
+  padding: 24px;
   color: var(--text-muted);
+  font-size: 15px;
 }
 
 /* ── Viewer ── */
@@ -180,13 +251,15 @@ body {
   overflow: auto;
   display: flex;
   justify-content: center;
+  align-items: flex-start;
   padding: 16px;
-  background: #111;
+  background: var(--bg);
 }
 
 .canvas-container canvas {
   box-shadow: 0 4px 24px rgba(0,0,0,0.6);
-  max-width: 100%;
+  display: block;
+  flex-shrink: 0;
 }
 
 .viewer-error {
@@ -229,7 +302,7 @@ body {
 
 .drop-zone:hover {
   border-color: var(--accent);
-  background: rgba(233,69,96,0.05);
+  background: rgba(92,184,92,0.05);
 }
 
 .drop-zone .file-selected {
@@ -423,7 +496,7 @@ body {
 
 .sidebar-thumb.active {
   border-color: var(--accent);
-  background: rgba(233,69,96,0.08);
+  background: var(--accent-active-bg);
 }
 
 .sidebar-thumb canvas {
@@ -532,7 +605,7 @@ body {
 
 .ext-thumb.active {
   border-color: var(--accent);
-  background: rgba(233,69,96,0.1);
+  background: var(--accent-active-bg);
 }
 
 .ext-thumb canvas {
@@ -697,8 +770,8 @@ body {
 }
 
 .sign-info {
-  background: rgba(233,69,96,0.07);
-  border: 1px solid rgba(233,69,96,0.25);
+  background: rgba(92,184,92,0.07);
+  border: 1px solid rgba(92,184,92,0.25);
   border-radius: var(--radius);
   padding: 10px 14px;
   font-size: 12px;
@@ -729,7 +802,7 @@ body {
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  background: #0d0d1a;
+  background: var(--bg);
 }
 
 .signer-drop-full {
@@ -748,7 +821,7 @@ body {
 
 .signer-drop-full:hover {
   border-color: var(--accent);
-  background: rgba(233,69,96,0.04);
+  background: rgba(92,184,92,0.04);
 }
 
 .signer-page-bar {

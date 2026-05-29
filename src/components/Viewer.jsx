@@ -94,6 +94,20 @@ export default function Viewer({ file }) {
 
   const goTo = useCallback(n => setCurrentPage(Math.max(1, Math.min(numPages, n))), [numPages])
 
+  useEffect(() => {
+    const el = canvasRef.current
+    if (!el) return
+    const onWheel = (e) => {
+      e.preventDefault()
+      setZoom(z => {
+        const delta = e.deltaY < 0 ? 0.1 : -0.1
+        return Math.min(3, Math.max(0.5, +(z + delta).toFixed(1)))
+      })
+    }
+    el.addEventListener('wheel', onWheel, { passive: false })
+    return () => el.removeEventListener('wheel', onWheel)
+  }, [])
+
   if (!file) return null
 
   return (

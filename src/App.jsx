@@ -5,6 +5,8 @@ import LockDialog from './components/LockDialog'
 import Extractor from './components/Extractor'
 import Signer from './components/Signer'
 import './App.css'
+import bitzerLogo from './assets/BitzerPDF Logo mk2.png'
+import bitzerMascot from './assets/Bitzer Gator PDF Mascot nobg.png'
 
 const TABS = ['View', 'Combine', 'Extract', 'Sign', 'Lock']
 
@@ -36,7 +38,7 @@ export default function App() {
     >
       <header className="app-header">
         <div className="header-left">
-          <span className="logo">BitzerPDF</span>
+          <img src={bitzerLogo} alt="BitzerPDF" className="logo-img logo-btn" onClick={() => setTab('View')} />
           {tab === 'View' && (
             <button className="open-btn" onClick={() => inputRef.current?.click()}>
               Open PDF
@@ -63,12 +65,18 @@ export default function App() {
         </nav>
       </header>
 
+      <div className="dev-banner">
+        <span className="dev-banner-title">Under Development</span>
+        <span className="dev-banner-sub">Expect visual bugs, errors, or other non-functional aspects</span>
+      </div>
+      <div className="version-badge">Beta 0.15</div>
       <main className="app-main">
         {tab === 'View' && (
           viewerFile ? (
             <Viewer file={viewerFile} />
           ) : (
             <div className="empty-state">
+              <img src={bitzerMascot} alt="Bitzer mascot" className="mascot-img" />
               <p>Open a PDF to get started</p>
               <button className="action-btn" onClick={() => inputRef.current?.click()}>
                 Browse files

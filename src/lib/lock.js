@@ -1,12 +1,4 @@
-import { PDFDocument } from 'pdf-lib'
-
-// permissions flags per PDF spec
-const PERMISSIONS = {
-  print: 4,
-  modify: 8,
-  copy: 16,
-  annotate: 32,
-}
+import { PDFDocument } from '@cantoo/pdf-lib'
 
 export async function lockPdf(fileOrBytes, options = {}) {
   const {
@@ -22,16 +14,11 @@ export async function lockPdf(fileOrBytes, options = {}) {
 
   const doc = await PDFDocument.load(bytes)
 
-  let permissions = 0
-  if (allowPrint) permissions |= PERMISSIONS.print
-  if (allowEdit) permissions |= PERMISSIONS.modify | PERMISSIONS.annotate
-  if (allowCopy) permissions |= PERMISSIONS.copy
-
-  const saved = await doc.save({
-    userPassword,
-    ownerPassword: ownerPassword || userPassword + '_owner',
+  doc.encrypt({
+    userPassword: userPassword || undefined,
+    ownerPassword: ownerPassword || (userPassword ? userPassword + '_owner' : 'owner'),
     permissions: {
-      printing: allowPrint ? 'highResolution' : 'none',
+      printing: allowPrint ? 'highResolution' : false,
       modifying: allowEdit,
       copying: allowCopy,
       annotating: allowEdit,
@@ -41,5 +28,5 @@ export async function lockPdf(fileOrBytes, options = {}) {
     },
   })
 
-  return saved
+  return doc.save()
 }
