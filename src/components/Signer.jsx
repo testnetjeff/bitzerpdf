@@ -53,8 +53,16 @@ export default function Signer() {
 
   // ── Signature pad ──────────────────────────────────────────────────────────
   useEffect(() => {
-    if (!sigCanvasRef.current) return
-    padRef.current = new SignaturePad(sigCanvasRef.current, {
+    const canvas = sigCanvasRef.current
+    if (!canvas) return
+
+    // Match internal resolution to CSS display size so pointer coords align exactly
+    const ratio = window.devicePixelRatio || 1
+    canvas.width = canvas.offsetWidth * ratio
+    canvas.height = canvas.offsetHeight * ratio
+    canvas.getContext('2d').scale(ratio, ratio)
+
+    padRef.current = new SignaturePad(canvas, {
       backgroundColor: 'rgba(0,0,0,0)',
       penColor: '#1a237e',
       minWidth: 1.5,
@@ -371,7 +379,7 @@ export default function Signer() {
 
         {mode === 'draw' ? (
           <div className="sig-canvas-wrapper">
-            <canvas ref={sigCanvasRef} width={260} height={110} className="sig-canvas" />
+            <canvas ref={sigCanvasRef} className="sig-canvas" />
             <button className="sig-clear-btn" onClick={() => { padRef.current?.clear(); setSigPreview(null) }}>Clear</button>
           </div>
         ) : (

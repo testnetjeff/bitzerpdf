@@ -1,11 +1,17 @@
 import forge from 'node-forge'
 import { PDFDocument } from 'pdf-lib'
 import { pdflibAddPlaceholder } from '@signpdf/placeholder-pdf-lib'
-import * as _signpdfModule from '@signpdf/signpdf'
-// Vite wraps the CJS exports object as .default, so the actual instance is .default.default
-const _signpdfRaw = _signpdfModule.default
-const signpdf = _signpdfRaw?.default ?? _signpdfRaw
+import _signpdfDefault from '@signpdf/signpdf'
 import { P12Signer } from '@signpdf/signer-p12'
+// Vite CJS interop can wrap the module once or twice depending on __esModule flag.
+// Walk until we find the object that actually has a .sign method.
+function resolveSignpdf(m) {
+  if (m && typeof m.sign === 'function') return m
+  if (m && typeof m.default?.sign === 'function') return m.default
+  if (m && typeof m.default?.default?.sign === 'function') return m.default.default
+  throw new Error('Could not resolve signpdf.sign — check @signpdf/signpdf interop')
+}
+const signpdf = resolveSignpdf(_signpdfDefault)
 
 async function generateKeyPair() {
   const wc = await window.crypto.subtle.generateKey(
