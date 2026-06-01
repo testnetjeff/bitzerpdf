@@ -1001,3 +1001,225 @@ body {
   object-fit: contain;
   padding: 4px;
 }
+
+/* ── Organizer ── */
+
+.organizer-panel {
+  max-width: 800px;
+}
+
+.org-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  max-height: 430px;
+  overflow-y: auto;
+  padding: 4px 2px;
+}
+
+.org-grid::-webkit-scrollbar { width: 4px; }
+.org-grid::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+.org-thumb {
+  position: relative;
+  width: 90px;
+  border-radius: 6px;
+  padding: 5px;
+  border: 2px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  cursor: grab;
+  background: var(--surface2);
+  transition: border-color 0.15s, box-shadow 0.15s;
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.org-thumb:active { cursor: grabbing; }
+.org-thumb:hover { border-color: var(--text-muted); }
+
+.org-thumb.org-drag-over {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(92,184,92,0.3);
+}
+
+.org-thumb canvas {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 2px;
+  background: #fff;
+  min-height: 100px;
+  pointer-events: none;
+}
+
+.org-thumb-btns {
+  display: flex;
+  gap: 3px;
+  width: 100%;
+  justify-content: center;
+}
+
+.org-thumb-btns button {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.15s, border-color 0.15s;
+  padding: 0;
+}
+
+.org-thumb-btns button:hover { color: var(--text); border-color: var(--text-muted); }
+.org-thumb-btns .remove-btn:hover { color: #e57373 !important; border-color: #e57373 !important; }
+
+/* ── Annotator ── */
+
+.annotator-workspace {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.annotator-pdf-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+.annotator-controls-col {
+  width: 230px;
+  flex-shrink: 0;
+  overflow-y: auto;
+  padding: 16px 14px;
+  background: var(--surface);
+  border-left: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.annotator-controls-col h2 {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.ann-tools {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ann-tool-btn {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  padding: 7px 12px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  font-size: 13px;
+  text-align: left;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.ann-tool-btn:hover { color: var(--text); border-color: var(--text-muted); }
+
+.ann-tool-btn.active {
+  background: var(--accent-active-bg);
+  color: var(--accent);
+  border-color: var(--accent);
+  font-weight: 500;
+}
+
+.ann-colors {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+
+.ann-color-swatch {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: transform 0.1s, border-color 0.1s;
+  padding: 0;
+  outline: none;
+}
+
+.ann-color-swatch:hover { transform: scale(1.18); }
+.ann-color-swatch.active { border-color: #fff; box-shadow: 0 0 0 2px var(--accent); }
+
+.ann-color-input {
+  width: 22px;
+  height: 22px;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  background: var(--surface2);
+  cursor: pointer;
+  padding: 0;
+}
+
+.ann-range {
+  width: 100%;
+  accent-color: var(--accent);
+}
+
+.ann-page-summary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text-muted);
+  flex-wrap: wrap;
+}
+
+/* Overlay canvas sits exactly atop the PDF canvas */
+.ann-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/* Single-line editor for plain text tool */
+.ann-plain-editor {
+  position: absolute;
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 0 2px;
+  font-family: Arial, sans-serif;
+  line-height: 1.4;
+  z-index: 10;
+  min-width: 40px;
+  caret-color: currentColor;
+}
+
+/* Inline text editor for text-box and sticky-note tools */
+.ann-text-editor {
+  position: absolute;
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 3px;
+  padding: 4px;
+  resize: none;
+  outline: none;
+  font-family: Arial, sans-serif;
+  line-height: 1.35;
+  z-index: 10;
+  color: #111;
+  overflow: hidden;
+}

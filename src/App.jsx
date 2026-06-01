@@ -4,11 +4,13 @@ import Merger from './components/Merger'
 import LockDialog from './components/LockDialog'
 import Extractor from './components/Extractor'
 import Signer from './components/Signer'
+import Annotator from './components/Annotator'
+import Organizer from './components/Organizer'
 import './App.css'
 import bitzerLogo from './assets/BitzerPDF Logo mk2.png'
 import bitzerMascot from './assets/Bitzer Gator PDF Mascot nobg.png'
 
-const TABS = ['View', 'Combine', 'Extract', 'Sign', 'Lock']
+const TABS = ['View', 'Combine', 'Extract', 'Sign', 'Lock', 'Annotate', 'Organize']
 
 export default function App() {
   const [tab, setTab] = useState('View')
@@ -69,7 +71,7 @@ export default function App() {
         <span className="dev-banner-title">Under Development</span>
         <span className="dev-banner-sub">Expect visual bugs, errors, or other non-functional aspects</span>
       </div>
-      <div className="version-badge">Beta 0.15</div>
+      <div className="version-badge">Beta 0.2</div>
       <main className="app-main">
         {tab === 'View' && (
           viewerFile ? (
@@ -88,6 +90,8 @@ export default function App() {
         {tab === 'Extract' && <Extractor />}
         {tab === 'Sign' && <Signer />}
         {tab === 'Lock' && <LockDialog />}
+        {tab === 'Annotate' && <Annotator />}
+        {tab === 'Organize' && <Organizer />}
       </main>
     </div>
   )
